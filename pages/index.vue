@@ -2,6 +2,7 @@
   <main>
     <InputForm @addItem="addItemToGrid" />
     <transition-group name="list" class="productGrid">
+      <!-- Передаем компоненту Card данные в виде пропа из cards, для рендеринга информации -->
       <Card
         @removeItemFrom="removeItemFromGrid(index)"
         :card="card"
@@ -13,8 +14,8 @@
 </template>
 
 <script>
-import InputForm from '~/components/inputForm.vue'
-import Card from '~/components/card.vue'
+import InputForm from '~/components/inputForm.vue' // Импорт формы добавления товара
+import Card from '~/components/card.vue' // Импорт компонента карточки
 
 export default {
   layout: 'default',
@@ -22,10 +23,11 @@ export default {
     InputForm,
     Card,
   },
-  props: ['sortingValue'],
+  props: ['sortingValue'], // Проп получаемый из layouts/default.vue с данными о типе сортировки
   data() {
     return {
       cards: [
+        // Массив карточек-плейсхолдеров, куда так же добавляются новые карточки
         {
           imageURL: '/_nuxt/assets/image.png',
           title: 'Наименование товара 1',
@@ -105,12 +107,13 @@ export default {
   mounted() {
     if (localStorage.cards) {
       this.cards = JSON.parse(localStorage.getItem('cards'))
-    }
+    } // Из localStorage получаем список сохранившихся карточек
     if (localStorage.id) {
       this.id = JSON.parse(localStorage.getItem('id'))
-    }
+    } // Из localStorage получаем сохранившийся id, чтобы не произошла дубликация :key элемента при v-for
   },
   computed: {
+    /* Функция сортировки карточек с пропом sortingValue */
     sortFunc() {
       if (this.sortingValue === 'По цене min') {
         this.cards.sort((x, y) => {
@@ -133,24 +136,26 @@ export default {
     },
   },
   methods: {
+    /* Функция добавления карточки в массив cards, данные получаем из components/inputForm.vue */
     addItemToGrid(value) {
       this.cards.unshift({
         imageURL: value.PassedURL,
         title: value.PassedTitle,
         description: value.PassedDesctiption,
-        price: value.PassedPrice.toLocaleString('ru-RU'),
+        price: value.PassedPrice.toLocaleString('ru-RU'), // Переводим цену в локальную систему разрядов
         id: this.id + 1,
       })
-      this.id++
-      this.setLocalStorage()
+      this.id++ // Увеличиваем id для того, чтобы не дублировался :key параметр в v-for
+      this.setLocalStorage() // Заносим данные в localStorage для сохранения списка при перезагрузке
     },
     setLocalStorage() {
       localStorage.setItem('cards', JSON.stringify(this.cards))
       localStorage.setItem('id', JSON.stringify(this.id))
     },
+    /* Функция удаления карточки из массива cards, получает emit из компенента карточки, индекс берем из v-for */
     removeItemFromGrid(index) {
       this.cards.splice(index, 1)
-      this.setLocalStorage()
+      this.setLocalStorage() // Заносим данные в localStorage для сохранения списка при перезагрузке
     },
   },
 }
@@ -180,7 +185,6 @@ main {
 
     .productGrid {
       grid-template-columns: 1fr;
-      // flex-direction: column;
       justify-items: center;
       width: 100%;
     }
@@ -211,14 +215,16 @@ main {
     }
   }
 
-  @media (max-width: 1200px){
-    .productGrid{
+  @media (max-width: 1200px) {
+    // Медиа query для маленьких мониторов / Планшетов
+    .productGrid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (max-width: 1024px){
-  	.productGrid{
+  @media (max-width: 1024px) {
+    // Медиа query для старых мониторов / Планшетов с маленькой диагональю
+    .productGrid {
       grid-template-columns: repeat(1, 1fr);
     }
   }

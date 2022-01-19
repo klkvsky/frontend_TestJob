@@ -1,4 +1,5 @@
 <template>
+  <!-- При нажатии на компонент, активируем функцию removeItem для посыла emit parent элементу-->
   <div class="card__delete" @click="removeItem()">
     <svg
       width="16"
@@ -37,6 +38,7 @@
 <script>
 export default {
   methods: {
+    // Посылаем emit parent элементу об удалении карточки
     removeItem() {
       this.$emit('removeItem')
     },
@@ -77,7 +79,7 @@ export default {
   &:active {
     transition: 0.2s all ease-in-out;
     background-color: #ff2828;
-    transform: scale(.9);
+    transform: scale(0.9);
   }
 
   svg {

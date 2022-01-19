@@ -1,5 +1,7 @@
 <template>
+  <!-- Оборачиваем прелоадер в transition для облегчения работы с анимациями  -->
   <transition name="fade">
+    <!-- Прелоадер активен, если show === true -->
     <div v-if="show" class="preloader">
       <h1>🐣</h1>
       <h1>Добро пожаловать</h1>
@@ -9,21 +11,23 @@
 
 <script>
 export default {
-    data() {
-        return {
-            show: true
-        }
+  data() {
+    return {
+      show: true, // Отвечает за состояние прелоадера, при false прелоадер уходит
+    }
+  },
+  mounted() {
+    this.activePreloader()
+    // При загрузке активируем activePreloader(), для посыла сигнала о начале закрывания прелоадера
+  },
+  methods: {
+    // Метод через 1.5 секунды удаляет прелоадер, по свойствам назначения show обьекта false значения
+    activePreloader() {
+      setTimeout(() => {
+        this.show = false
+      }, 1500)
     },
-    mounted() {
-        this.activePreloader()
-    },
-    methods: {
-        activePreloader(){
-            setTimeout(() => {
-                this.show = false
-            }, 1500);
-        }
-    },
+  },
 }
 </script>
 
@@ -60,21 +64,26 @@ export default {
   transition: 1s opacity;
 
   h1 {
-      animation: popOut 1.5s linear;
+    animation: popOut 1.5s linear;
   }
 }
 
-.fade-enter, .fade-leave-to{
-    opacity: 0;
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+
+  h1 {
+    animation: popOut 1.5s linear;
+  }
 }
 
+// Анимация ухода элементов прелоадера
 @keyframes popOut {
-    0% { transform: scale(1);}
-    100% { transform: scale(0);}
-}
-
-@keyframes popIn {
-    0% { transform: scale(0);}
-    100% { transform: scale(1);}
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
 }
 </style>

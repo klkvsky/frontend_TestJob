@@ -11,7 +11,8 @@
       <h2>{{ card.price }} руб.</h2>
     </div>
 
-    <DeleteButton @removeItem="removeItemFrom"/>
+    <!-- Компонент DeleteButton посылает emit при нажатии, об удалении карточки, это активирует функцию removeItemFrom -->
+    <DeleteButton @removeItem="removeItemFrom" />
   </div>
 </template>
 
@@ -22,11 +23,12 @@ export default {
   components: {
     DeleteButton,
   },
-  props: ['card'],
+  props: ['card'], // Проп card получаем из /index.vue массива cards в нем
   methods: {
-    removeItemFrom(){
+    // При активации этой функции она посылает emit /index.vue , который получает ее с индексом карточки и удалет товар
+    removeItemFrom() {
       this.$emit('removeItemFrom')
-    }
+    },
   },
 }
 </script>
@@ -105,25 +107,25 @@ export default {
     }
   }
 
-
-  @media (max-width: 767.98px){
-  	width: 95%;
+  // Медаа query для мобильных устройств
+  @media (max-width: 767.98px) {
+    width: 95%;
     height: 350px;
 
-    &__body{
+    &__body {
       padding: 6vw;
       padding-bottom: 6.5vw;
       grid-template-rows: 1fr 2fr 1fr;
 
-      h3{
+      h3 {
         font-size: 5vw;
       }
 
-      p{
+      p {
         font-size: 3.8vw;
       }
 
-      h2{
+      h2 {
         font-size: 5.8vw;
       }
     }

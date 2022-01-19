@@ -2,6 +2,7 @@
   <header>
     <h1>Добавление товара</h1>
 
+    <!-- При нажатии на элемент запускается dropdown(), который открывает меню сортировки  -->
     <div class="selectSorting" @click="dropdown">
       <button>
         <span> {{ CurrentSelection }} </span>
@@ -20,10 +21,14 @@
         </svg>
       </button>
 
+      <!-- При isDropdown === true открывается меню сортировки -->
       <div class="selectSorting__options" :class="{ active: isDropdown }">
-        <span @click="CurrentSelection='По цене min'"> По цене min </span>
-        <span @click="CurrentSelection='По цене max'"> По цене max </span>
-        <span @click="CurrentSelection='По наименованию'"> По наименованию </span>
+        <!-- При нажатии на span, CurrentSelection меняется на соответственный вариант и отоображается в button в начале .selectSorting div'а -->
+        <span @click="CurrentSelection = 'По цене min'"> По цене min </span>
+        <span @click="CurrentSelection = 'По цене max'"> По цене max </span>
+        <span @click="CurrentSelection = 'По наименованию'">
+          По наименованию
+        </span>
       </div>
     </div>
   </header>
@@ -33,16 +38,18 @@
 export default {
   data() {
     return {
-      CurrentSelection: 'По умолчанию',
-      isDropdown: false,
+      CurrentSelection: 'По умолчанию', // Показывает какой метод сортировки сейчас активен
+      isDropdown: false, // Отвечает за состояние меню сортировки
     }
   },
   watch: {
-    CurrentSelection(){
+    // Watch'ер который при изменении CurrentSelection(Типа сортировки) посылает emit с типом сортировки parent элементу /default.vue, откуда данные в виде пропа посылаются в <NuxtChild /> i.e. /index.vue
+    CurrentSelection() {
       this.$emit('changeSorting', this.CurrentSelection)
-    }
+    },
   },
   methods: {
+    // метод который при активации меняет isDropdown на противоположное значение, является toggle'ом для меню активации
     dropdown() {
       this.isDropdown = !this.isDropdown
     },
@@ -153,6 +160,7 @@ header {
     }
   }
 
+  // Стили для мобильных устройств
   @media (max-width: 767.98px) {
     flex-direction: column;
     gap: 1rem;
