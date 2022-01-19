@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <Preloader />
-    <PageHeader @changeSorting="changeSorting" />
-    <NuxtChild :sortingValue="this.sortingValue" />
-    <FooterComponent />
+    <div class="container__child">
+      <Preloader />
+      <PageHeader @changeSorting="changeSorting" />
+      <NuxtChild :sortingValue="this.sortingValue" />
+      <FooterComponent />
+    </div>
   </div>
 </template>
 
@@ -21,7 +23,7 @@ export default {
   components: {
     PageHeader,
     Preloader,
-    FooterComponent
+    FooterComponent,
   },
   methods: {
     changeSorting(value) {
@@ -34,11 +36,17 @@ export default {
 <style scoped lang="scss">
 .container {
   padding: 0 2.2%;
-  display: flex;
-  flex-direction: column;
   background-color: rgba(255, 254, 251, 0.8);
   // background-color: #dadada;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+
+  &__child {
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+  }
 }
 </style>
 

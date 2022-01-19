@@ -31,7 +31,7 @@ export default {
 }
 </script>
 
-<style  lang="scss">
+<style scoped lang="scss">
 .card {
   background: #fffefb;
   box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
@@ -61,6 +61,8 @@ export default {
       object-fit: cover;
       width: 100%;
       height: 100%;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
     }
   }
 
@@ -100,6 +102,30 @@ export default {
       line-height: 30px;
 
       color: #3f3f3f;
+    }
+  }
+
+
+  @media (max-width: 767.98px){
+  	width: 95%;
+    height: 350px;
+
+    &__body{
+      padding: 6vw;
+      padding-bottom: 6.5vw;
+      grid-template-rows: 1fr 2fr 1fr;
+
+      h3{
+        font-size: 5vw;
+      }
+
+      p{
+        font-size: 3.8vw;
+      }
+
+      h2{
+        font-size: 5.8vw;
+      }
     }
   }
 }

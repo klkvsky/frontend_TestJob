@@ -124,7 +124,7 @@ export default {
         return this.cards
       } else if (this.sortingValue === 'По наименованию') {
         this.cards.sort((x, y) => {
-          return (x.title > y.title) ? 1 : -1;
+          return x.title > y.title ? 1 : -1
         })
         return this.cards
       } else {
@@ -146,7 +146,7 @@ export default {
     },
     setLocalStorage() {
       localStorage.setItem('cards', JSON.stringify(this.cards))
-      localStorage.setItem('id', JSON.stringify(this.id));
+      localStorage.setItem('id', JSON.stringify(this.id))
     },
     removeItemFromGrid(index) {
       this.cards.splice(index, 1)
@@ -208,6 +208,18 @@ main {
     }
     100% {
       transform: translateY(-200px);
+    }
+  }
+
+  @media (max-width: 1200px){
+    .productGrid{
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 1024px){
+  	.productGrid{
+      grid-template-columns: repeat(1, 1fr);
     }
   }
 }

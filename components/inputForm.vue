@@ -362,6 +362,7 @@ export default {
 
   @media (max-width: 767.98px) {
     position: relative;
+    width: 95%;
   }
 }
 </style>

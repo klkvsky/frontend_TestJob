@@ -21,7 +21,6 @@
       </button>
 
       <div class="selectSorting__options" :class="{ active: isDropdown }">
-        <span @click="CurrentSelection='По умолчанию'"> По умолчанию </span>
         <span @click="CurrentSelection='По цене min'"> По цене min </span>
         <span @click="CurrentSelection='По цене max'"> По цене max </span>
         <span @click="CurrentSelection='По наименованию'"> По наименованию </span>
