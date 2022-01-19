@@ -1,25 +1,32 @@
 <template>
   <div class="container">
-    <PageHeader @changeSorting="changeSorting"/>
-   <NuxtChild :sortingValue="this.sortingValue"/>
+    <Preloader />
+    <PageHeader @changeSorting="changeSorting" />
+    <NuxtChild :sortingValue="this.sortingValue" />
+    <FooterComponent />
   </div>
 </template>
 
 <script>
 import PageHeader from '~/components/pageHeader.vue'
+import Preloader from '~/components/Preloader.vue'
+import FooterComponent from '~/components/FooterComponent.vue'
+
 export default {
-  data(){
-    return{
+  data() {
+    return {
       sortingValue: 'По умолчанию',
     }
   },
   components: {
     PageHeader,
+    Preloader,
+    FooterComponent
   },
   methods: {
-    changeSorting(value){
+    changeSorting(value) {
       this.sortingValue = value
-    }
+    },
   },
 }
 </script>
