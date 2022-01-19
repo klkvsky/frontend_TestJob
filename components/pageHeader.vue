@@ -38,6 +38,11 @@ export default {
       isDropdown: false,
     }
   },
+  watch: {
+    CurrentSelection(){
+      this.$emit('changeSorting', this.CurrentSelection)
+    }
+  },
   methods: {
     dropdown() {
       this.isDropdown = !this.isDropdown

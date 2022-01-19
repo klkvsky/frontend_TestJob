@@ -5,7 +5,7 @@
       <Card
         @removeItemFrom="removeItemFromGrid(index)"
         :card="card"
-        v-for="(card, index) in cards"
+        v-for="(card, index) in sortFunc"
         :key="card.id"
       />
     </transition-group>
@@ -22,6 +22,7 @@ export default {
     InputForm,
     Card,
   },
+  props: ['sortingValue'],
   data() {
     return {
       cards: [
@@ -30,7 +31,7 @@ export default {
           title: 'Наименование товара 1',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '10 000',
           id: 1,
         },
         {
@@ -38,7 +39,7 @@ export default {
           title: 'Наименование товара 2',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '10 000',
           id: 2,
         },
         {
@@ -46,7 +47,7 @@ export default {
           title: 'Наименование товара 3',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '10 000',
           id: 3,
         },
         {
@@ -54,7 +55,7 @@ export default {
           title: 'Наименование товара 4',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '10 000',
           id: 4,
         },
         {
@@ -62,7 +63,7 @@ export default {
           title: 'Наименование товара 5',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '5 000',
           id: 5,
         },
         {
@@ -70,7 +71,7 @@ export default {
           title: 'Наименование товара 6',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '8 000',
           id: 6,
         },
         {
@@ -78,7 +79,7 @@ export default {
           title: 'Наименование товара 7',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '9 000',
           id: 7,
         },
         {
@@ -86,7 +87,7 @@ export default {
           title: 'Наименование товара 8',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '12 000',
           id: 8,
         },
         {
@@ -94,26 +95,45 @@ export default {
           title: 'Наименование товара 9',
           description:
             'Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк',
-          price: '10 000 ',
+          price: '11 000',
           id: 9,
         },
       ],
       id: 9,
-      currentOrder: 'value',
     }
   },
   mounted() {
-    // if (localStorage.cards) {
-    //   this.cards = JSON.parse(localStorage.getItem('cards'))
-    // }
-
-    // if (localStorage.id) {
-    //   this.id = JSON.parse(localStorage.getItem('id'))
-    // }
+    if (localStorage.cards) {
+      this.cards = JSON.parse(localStorage.getItem('cards'))
+    }
+    if (localStorage.id) {
+      this.id = JSON.parse(localStorage.getItem('id'))
+    }
+  },
+  computed: {
+    sortFunc() {
+      if (this.sortingValue === 'По цене min') {
+        this.cards.sort((x, y) => {
+          return parseInt(x.price) > parseInt(y.price)
+        })
+        return this.cards
+      } else if (this.sortingValue === 'По цене max') {
+        this.cards.sort((x, y) => {
+          return parseInt(x.price) < parseInt(y.price)
+        })
+        return this.cards
+      } else if (this.sortingValue === 'По наименованию') {
+        this.cards.sort((x, y) => {
+          return (x.title > y.title) ? 1 : -1;
+        })
+        return this.cards
+      } else {
+        return this.cards
+      }
+    },
   },
   methods: {
     addItemToGrid(value) {
-      // console.log(value.PassedTitle)
       this.cards.unshift({
         imageURL: value.PassedURL,
         title: value.PassedTitle,
@@ -125,8 +145,8 @@ export default {
       this.setLocalStorage()
     },
     setLocalStorage() {
-      localStorage.setItem('cards', JSON.stringify(this.cards));
-      // localStorage.setItem('id', JSON.stringify(this.id));
+      localStorage.setItem('cards', JSON.stringify(this.cards))
+      localStorage.setItem('id', JSON.stringify(this.id));
     },
     removeItemFromGrid(index) {
       this.cards.splice(index, 1)

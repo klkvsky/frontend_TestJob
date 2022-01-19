@@ -11,7 +11,7 @@
       <h2>{{ card.price }} руб.</h2>
     </div>
 
-    <DeleteButton v-on:removeItem="removeItemFrom"/>
+    <DeleteButton @removeItem="removeItemFrom"/>
   </div>
 </template>
 

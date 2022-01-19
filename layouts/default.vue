@@ -1,15 +1,25 @@
 <template>
   <div class="container">
-    <PageHeader/>
-    <Nuxt />
+    <PageHeader @changeSorting="changeSorting"/>
+   <NuxtChild :sortingValue="this.sortingValue"/>
   </div>
 </template>
 
 <script>
 import PageHeader from '~/components/pageHeader.vue'
 export default {
+  data(){
+    return{
+      sortingValue: 'По умолчанию',
+    }
+  },
   components: {
     PageHeader,
+  },
+  methods: {
+    changeSorting(value){
+      this.sortingValue = value
+    }
   },
 }
 </script>
